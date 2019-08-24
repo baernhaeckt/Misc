@@ -6,12 +6,13 @@ function Main {
     # Register user
     Write-Host "Register Users"
     $username = GenerateRandomString + "@" GenerateRandomString + ".ch"
+    Write-Host $username
     $registerAnswer = Invoke-WebRequest -Uri "http://localhost:5000/api/users/Register?email=$username" -Method "POST"
     EnsureSuccessfulResponse $registerAnswer
 
     # Get JWT
     Write-Host "Get JWT"
-    $answer = Invoke-WebRequest -Uri "http://localhost:5000/api/users/Login?email=m%40m.ch&password=1234" -Method "POST"
+    $answer = Invoke-WebRequest -Uri "http://localhost:5000/api/users/Login?email=$username&password=1234" -Method "POST"
     EnsureSuccessfulResponse $answer
     $parsedAnswer = $answer.Content | ConvertFrom-Json
     $parsedAnswer.token
