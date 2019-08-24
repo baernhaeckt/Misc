@@ -52,6 +52,12 @@ function Main {
     if($awards.Length -ne 1) {
         throw "Not right count of awards"
     }
+    
+    # SufficientTypes Baseline
+    Write-Host "SufficientTypes Baseline"
+    $baselineAnswer = Invoke-WebRequest -Uri "http://localhost:5000/api/sufficienttype/baseline" -Method "GET" -Headers @{ "Authorization" = $t; }
+    EnsureSuccessfulResponse $baselineAnswer
+    $baselineAnswer.Content
 }
 
 
