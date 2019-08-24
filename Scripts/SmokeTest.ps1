@@ -43,6 +43,15 @@ function Main {
     $rankingAnswer = Invoke-WebRequest -Uri "http://localhost:5000/api/rankings/global" -Method "GET" -Headers @{ "Authorization" = $t; }
     EnsureSuccessfulResponse $rankingAnswer
     $rankingAnswer.Content
+
+    # Has at least the "first token"-award
+    Write-Host "Awards"
+    $awardAnswer = Invoke-WebRequest -Uri "http://localhost:5000/api/awards" -Method "GET" -Headers @{ "Authorization" = $t; }
+    EnsureSuccessfulResponse $awardAnswer
+    $awards = ($awardAnswer.Content | ConvertFrom-Json)
+    if($awards.Length -ne 1) {
+        throw "Not right count of awards"
+    }
 }
 
 
