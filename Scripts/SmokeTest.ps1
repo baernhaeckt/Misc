@@ -6,7 +6,6 @@ function Main {
     # Register user
     Write-Host "Register Users"
     $username = GenerateRandomString + "@" GenerateRandomString + ".ch"
-    Write-Host $username
     $registerAnswer = Invoke-WebRequest -Uri "http://localhost:5000/api/users/Register?email=$username" -Method "POST"
     EnsureSuccessfulResponse $registerAnswer
 
