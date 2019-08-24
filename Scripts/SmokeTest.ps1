@@ -58,6 +58,12 @@ function Main {
     $baselineAnswer = Invoke-WebRequest -Uri "http://localhost:5000/api/sufficienttype/baseline" -Method "GET" -Headers @{ "Authorization" = $t; }
     EnsureSuccessfulResponse $baselineAnswer
     $baselineAnswer.Content
+
+    # SufficientTypes User
+    Write-Host "SufficientTypes User"
+    $userSufficientTypesAnswer = Invoke-WebRequest -Uri "http://localhost:5000/api/sufficienttype/user" -Method "GET" -Headers @{ "Authorization" = $t; }
+    EnsureSuccessfulResponse $userSufficientTypesAnswer
+    $userSufficientTypesAnswer.Content
 }
 
 
