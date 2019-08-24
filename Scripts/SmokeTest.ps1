@@ -9,7 +9,7 @@ function Main {
     $registerAnswer = Invoke-WebRequest -Uri "http://localhost:5000/api/users/Register?email=$username" -Method "POST"
     EnsureSuccessfulResponse $registerAnswer
 
-    # Get JWT
+    # Get JWT (use the last registered user)
     Write-Host "Get JWT"
     $answer = Invoke-WebRequest -Uri "http://localhost:5000/api/users/Login?email=$username&password=1234" -Method "POST"
     EnsureSuccessfulResponse $answer
@@ -19,6 +19,7 @@ function Main {
 
     # Generate a bunch of tokens
     Write-Host "Generate Tokens"
+    # ccc14b11-5922-4e3e-bb54-03e71facaeb3 = Palette
     $token1Response = Invoke-WebRequest -Uri "http://localhost:5000/api/tokens?partnerId=ccc14b11-5922-4e3e-bb54-03e71facaeb3" -Headers @{ "Authorization" = $t; }
     $token2Response = Invoke-WebRequest -Uri "http://localhost:5000/api/tokens?partnerId=acc14b11-5922-4e3e-bb54-03e71facaeb3" -Headers @{ "Authorization" = $t; }
     $token3Response = Invoke-WebRequest -Uri "http://localhost:5000/api/tokens?partnerId=bcc14b11-5922-4e3e-bb54-03e71facaeb3" -Headers @{ "Authorization" = $t; }
@@ -30,13 +31,19 @@ function Main {
 
     $token1content = $token1Response.Content
     $token2content = $token2Response.Content
+    $token3content = $token3Response.Content
+    $token4content = $token4Response.Content
 
     # Use Token
     Write-Host "Use token"
     $useToken1Response = Invoke-WebRequest -Uri "http://localhost:5000/api/tokens?tokenGuid=$token1content" -Method "POST" -Headers @{ "Authorization" = $t; }
     $useToken2Response = Invoke-WebRequest -Uri "http://localhost:5000/api/tokens?tokenGuid=$token2content" -Method "POST" -Headers @{ "Authorization" = $t; }
+    $useToken3Response = Invoke-WebRequest -Uri "http://localhost:5000/api/tokens?tokenGuid=$token3content" -Method "POST" -Headers @{ "Authorization" = $t; }
+    $useToken4Response = Invoke-WebRequest -Uri "http://localhost:5000/api/tokens?tokenGuid=$token4content" -Method "POST" -Headers @{ "Authorization" = $t; }
     EnsureSuccessfulResponse $useToken1Response
     EnsureSuccessfulResponse $useToken2Response
+    EnsureSuccessfulResponse $useToken3Response
+    EnsureSuccessfulResponse $useToken4Response
 
     # Ranking
     Write-Host "Ranking"
@@ -44,12 +51,12 @@ function Main {
     EnsureSuccessfulResponse $rankingAnswer
     $rankingAnswer.Content
 
-    # Has at least the "first token"-award
+    # Has the "Onboarding" and "TrashHero"-award
     Write-Host "Awards"
     $awardAnswer = Invoke-WebRequest -Uri "http://localhost:5000/api/awards" -Method "GET" -Headers @{ "Authorization" = $t; }
     EnsureSuccessfulResponse $awardAnswer
     $awards = ($awardAnswer.Content | ConvertFrom-Json)
-    if($awards.Length -ne 1) {
+    if($awards.Length -ne 2) {
         throw "Not right count of awards"
     }
     
@@ -58,12 +65,6 @@ function Main {
     $baselineAnswer = Invoke-WebRequest -Uri "http://localhost:5000/api/sufficienttype/baseline" -Method "GET" -Headers @{ "Authorization" = $t; }
     EnsureSuccessfulResponse $baselineAnswer
     $baselineAnswer.Content
-
-    # SufficientTypes User
-    Write-Host "SufficientTypes User"
-    $userSufficientTypesAnswer = Invoke-WebRequest -Uri "http://localhost:5000/api/sufficienttype/user" -Method "GET" -Headers @{ "Authorization" = $t; }
-    EnsureSuccessfulResponse $userSufficientTypesAnswer
-    $userSufficientTypesAnswer.Content
 }
 
 
