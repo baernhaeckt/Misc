@@ -1,0 +1,482 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_BaernHaeckt_name": {
+            "defaultValue": "BaernHaeckt",
+            "type": "String"
+        },
+        "storageAccounts_baernhaeckt_name": {
+            "defaultValue": "baernhaeckt",
+            "type": "String"
+        },
+        "serverfarms_ASP_BaernHaeckt_8e85_name": {
+            "defaultValue": "ASP-BaernHaeckt-8e85",
+            "type": "String"
+        },
+        "databaseAccounts_baernhaeckt1_name": {
+            "defaultValue": "baernhaeckt1",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "apiVersion": "2015-04-08",
+            "name": "[parameters('databaseAccounts_baernhaeckt1_name')]",
+            "location": "North Europe",
+            "tags": {
+                "defaultExperience": "Azure Cosmos DB for MongoDB API",
+                "hidden-cosmos-mmspecial": ""
+            },
+            "kind": "MongoDB",
+            "properties": {
+                "enableAutomaticFailover": false,
+                "enableMultipleWriteLocations": false,
+                "isVirtualNetworkFilterEnabled": false,
+                "virtualNetworkRules": [],
+                "databaseAccountOfferType": "Standard",
+                "consistencyPolicy": {
+                    "defaultConsistencyLevel": "Session",
+                    "maxIntervalInSeconds": 5,
+                    "maxStalenessPrefix": 100
+                },
+                "locations": [
+                    {
+                        "locationName": "North Europe",
+                        "provisioningState": "Succeeded",
+                        "failoverPriority": 0,
+                        "isZoneRedundant": false
+                    }
+                ],
+                "capabilities": [
+                    {
+                        "name": "EnableAggregationPipeline"
+                    },
+                    {
+                        "name": "MongoDBv3.4"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-04-01",
+            "name": "[parameters('storageAccounts_baernhaeckt_name')]",
+            "location": "northeurope",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "StorageV2",
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true,
+                "encryption": {
+                    "services": {
+                        "file": {
+                            "enabled": true
+                        },
+                        "blob": {
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                },
+                "accessTier": "Hot"
+            }
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2016-09-01",
+            "name": "[parameters('serverfarms_ASP_BaernHaeckt_8e85_name')]",
+            "location": "North Europe",
+            "sku": {
+                "name": "F1",
+                "tier": "Free",
+                "size": "F1",
+                "family": "F",
+                "capacity": 0
+            },
+            "kind": "app",
+            "properties": {
+                "name": "[parameters('serverfarms_ASP_BaernHaeckt_8e85_name')]",
+                "perSiteScaling": false,
+                "reserved": false,
+                "targetWorkerCount": 0,
+                "targetWorkerSizeId": 0
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices",
+            "apiVersion": "2019-04-01",
+            "name": "[concat(parameters('storageAccounts_baernhaeckt_name'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_baernhaeckt_name'))]"
+            ],
+            "properties": {
+                "cors": {
+                    "corsRules": []
+                },
+                "deleteRetentionPolicy": {
+                    "enabled": false
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2016-08-01",
+            "name": "[parameters('sites_BaernHaeckt_name')]",
+            "location": "North Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP_BaernHaeckt_8e85_name'))]"
+            ],
+            "kind": "app",
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "baernhaeckt.azurewebsites.net",
+                        "sslState": "Disabled",
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "baernhaeckt.scm.azurewebsites.net",
+                        "sslState": "Disabled",
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP_BaernHaeckt_8e85_name'))]",
+                "reserved": false,
+                "scmSiteAlsoStopped": false,
+                "clientAffinityEnabled": true,
+                "clientCertEnabled": false,
+                "hostNamesDisabled": false,
+                "containerSize": 0,
+                "dailyMemoryTimeQuota": 0,
+                "httpsOnly": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/config",
+            "apiVersion": "2016-08-01",
+            "name": "[concat(parameters('sites_BaernHaeckt_name'), '/web')]",
+            "location": "North Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BaernHaeckt_name'))]"
+            ],
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php",
+                    "hostingstart.html"
+                ],
+                "netFrameworkVersion": "v4.0",
+                "phpVersion": "5.6",
+                "pythonVersion": "",
+                "nodeVersion": "",
+                "linuxFxVersion": "",
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": false,
+                "remoteDebuggingVersion": "VS2017",
+                "httpLoggingEnabled": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "publishingUsername": "$BaernHaeckt",
+                "scmType": "VSTSRM",
+                "use32BitWorkerProcess": true,
+                "webSocketsEnabled": true,
+                "alwaysOn": false,
+                "appCommandLine": "",
+                "managedPipelineMode": "Integrated",
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": false,
+                        "virtualDirectories": null
+                    }
+                ],
+                "winAuthAdminState": 0,
+                "winAuthTenantState": 0,
+                "customAppPoolIdentityAdminState": false,
+                "customAppPoolIdentityTenantState": false,
+                "loadBalancing": "LeastRequests",
+                "routingRules": [],
+                "experiments": {
+                    "rampUpRules": []
+                },
+                "autoHealEnabled": false,
+                "vnetName": "",
+                "siteAuthEnabled": false,
+                "siteAuthSettings": {
+                    "enabled": null,
+                    "unauthenticatedClientAction": null,
+                    "tokenStoreEnabled": null,
+                    "allowedExternalRedirectUrls": null,
+                    "defaultProvider": null,
+                    "clientId": null,
+                    "clientSecret": null,
+                    "clientSecretCertificateThumbprint": null,
+                    "issuer": null,
+                    "allowedAudiences": null,
+                    "additionalLoginParams": null,
+                    "isAadAutoProvisioned": false,
+                    "googleClientId": null,
+                    "googleClientSecret": null,
+                    "googleOAuthScopes": null,
+                    "facebookAppId": null,
+                    "facebookAppSecret": null,
+                    "facebookOAuthScopes": null,
+                    "twitterConsumerKey": null,
+                    "twitterConsumerSecret": null,
+                    "microsoftAccountClientId": null,
+                    "microsoftAccountClientSecret": null,
+                    "microsoftAccountOAuthScopes": null
+                },
+                "cors": {
+                    "allowedOrigins": [
+                        "http://localhost:8080",
+                        "https://baernhaeckt.azurewebsites.net",
+                        "https://baernhaeckt.z16.web.core.windows.net"
+                    ],
+                    "supportCredentials": true
+                },
+                "localMySqlEnabled": false,
+                "http20Enabled": false,
+                "minTlsVersion": "1.2",
+                "ftpsState": "AllAllowed",
+                "reservedInstanceCount": 0,
+                "fileChangeAuditEnabled": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2016-08-01",
+            "name": "[concat(parameters('sites_BaernHaeckt_name'), '/1271566720955647')]",
+            "location": "North Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BaernHaeckt_name'))]"
+            ],
+            "properties": {
+                "id": "1271566720955647",
+                "status": 4,
+                "author": "Microsoft.VisualStudio.Services.TFS",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"de2c25c6d59d4aadddd0c6bf5bdc9852419e70a2\",\"buildId\":\"155\",\"releaseId\":\"127\",\"buildNumber\":\"20190825.8\",\"releaseName\":\"Release-73\",\"repoProvider\":\"GitHub\",\"repoName\":\"baernhaeckt/Backend\",\"collectionUrl\":\"https://dev.azure.com/baernhaeckt/\",\"teamProject\":\"dd328fad-53ce-434b-899a-e039e075f315\",\"buildProjectUrl\":\"https://dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315\",\"repositoryUrl\":\"\",\"branch\":\"master\",\"teamProjectName\":\"BaernHaeckt2019\",\"slotName\":\"production\"}",
+                "start_time": "2019-08-25T08:15:55.8202122Z",
+                "end_time": "2019-08-25T08:15:55.8202122Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2016-08-01",
+            "name": "[concat(parameters('sites_BaernHaeckt_name'), '/1281566723373534')]",
+            "location": "North Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BaernHaeckt_name'))]"
+            ],
+            "properties": {
+                "id": "1281566723373534",
+                "status": 4,
+                "author": "Microsoft.VisualStudio.Services.TFS",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"569d922a690af8e45ffecbea7442be62a06b5e2a\",\"buildId\":\"156\",\"releaseId\":\"128\",\"buildNumber\":\"20190825.9\",\"releaseName\":\"Release-74\",\"repoProvider\":\"GitHub\",\"repoName\":\"baernhaeckt/Backend\",\"collectionUrl\":\"https://dev.azure.com/baernhaeckt/\",\"teamProject\":\"dd328fad-53ce-434b-899a-e039e075f315\",\"buildProjectUrl\":\"https://dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315\",\"repositoryUrl\":\"\",\"branch\":\"master\",\"teamProjectName\":\"BaernHaeckt2019\",\"slotName\":\"production\"}",
+                "start_time": "2019-08-25T08:56:14.1506743Z",
+                "end_time": "2019-08-25T08:56:14.1506743Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2016-08-01",
+            "name": "[concat(parameters('sites_BaernHaeckt_name'), '/1291566724171809')]",
+            "location": "North Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BaernHaeckt_name'))]"
+            ],
+            "properties": {
+                "id": "1291566724171809",
+                "status": 4,
+                "author": "Microsoft.VisualStudio.Services.TFS",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"e761a6126804ee291a7826b2687a37c66fa5e5e5\",\"buildId\":\"157\",\"releaseId\":\"129\",\"buildNumber\":\"20190825.10\",\"releaseName\":\"Release-75\",\"repoProvider\":\"GitHub\",\"repoName\":\"baernhaeckt/Backend\",\"collectionUrl\":\"https://dev.azure.com/baernhaeckt/\",\"teamProject\":\"dd328fad-53ce-434b-899a-e039e075f315\",\"buildProjectUrl\":\"https://dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315\",\"repositoryUrl\":\"\",\"branch\":\"master\",\"teamProjectName\":\"BaernHaeckt2019\",\"slotName\":\"production\"}",
+                "start_time": "2019-08-25T09:09:31.98371Z",
+                "end_time": "2019-08-25T09:09:31.98371Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2016-08-01",
+            "name": "[concat(parameters('sites_BaernHaeckt_name'), '/1301566724331550')]",
+            "location": "North Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BaernHaeckt_name'))]"
+            ],
+            "properties": {
+                "id": "1301566724331550",
+                "status": 4,
+                "author": "Microsoft.VisualStudio.Services.TFS",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"38a6cc10f25d769723b24a6e158aace71aa916b9\",\"buildId\":\"158\",\"releaseId\":\"130\",\"buildNumber\":\"20190825.11\",\"releaseName\":\"Release-76\",\"repoProvider\":\"GitHub\",\"repoName\":\"baernhaeckt/Backend\",\"collectionUrl\":\"https://dev.azure.com/baernhaeckt/\",\"teamProject\":\"dd328fad-53ce-434b-899a-e039e075f315\",\"buildProjectUrl\":\"https://dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315\",\"repositoryUrl\":\"\",\"branch\":\"master\",\"teamProjectName\":\"BaernHaeckt2019\",\"slotName\":\"production\"}",
+                "start_time": "2019-08-25T09:12:11.721686Z",
+                "end_time": "2019-08-25T09:12:11.721686Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2016-08-01",
+            "name": "[concat(parameters('sites_BaernHaeckt_name'), '/1311566725511556')]",
+            "location": "North Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BaernHaeckt_name'))]"
+            ],
+            "properties": {
+                "id": "1311566725511556",
+                "status": 4,
+                "author": "Microsoft.VisualStudio.Services.TFS",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"4386356dfe13eb0780f24489b88b4140643df517\",\"buildId\":\"159\",\"releaseId\":\"131\",\"buildNumber\":\"20190825.12\",\"releaseName\":\"Release-77\",\"repoProvider\":\"GitHub\",\"repoName\":\"baernhaeckt/Backend\",\"collectionUrl\":\"https://dev.azure.com/baernhaeckt/\",\"teamProject\":\"dd328fad-53ce-434b-899a-e039e075f315\",\"buildProjectUrl\":\"https://dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315\",\"repositoryUrl\":\"\",\"branch\":\"master\",\"teamProjectName\":\"BaernHaeckt2019\",\"slotName\":\"production\"}",
+                "start_time": "2019-08-25T09:31:51.7347059Z",
+                "end_time": "2019-08-25T09:31:51.7347059Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2016-08-01",
+            "name": "[concat(parameters('sites_BaernHaeckt_name'), '/1331566726124530')]",
+            "location": "North Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BaernHaeckt_name'))]"
+            ],
+            "properties": {
+                "id": "1331566726124530",
+                "status": 4,
+                "author": "Microsoft.VisualStudio.Services.TFS",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"a161d55d9aae0ebe3b5b51f93a1918adb294273c\",\"buildId\":\"161\",\"releaseId\":\"133\",\"buildNumber\":\"20190825.13\",\"releaseName\":\"Release-78\",\"repoProvider\":\"GitHub\",\"repoName\":\"baernhaeckt/Backend\",\"collectionUrl\":\"https://dev.azure.com/baernhaeckt/\",\"teamProject\":\"dd328fad-53ce-434b-899a-e039e075f315\",\"buildProjectUrl\":\"https://dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315\",\"repositoryUrl\":\"\",\"branch\":\"master\",\"teamProjectName\":\"BaernHaeckt2019\",\"slotName\":\"production\"}",
+                "start_time": "2019-08-25T09:42:04.8317704Z",
+                "end_time": "2019-08-25T09:42:04.8317704Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2016-08-01",
+            "name": "[concat(parameters('sites_BaernHaeckt_name'), '/1341566726289938')]",
+            "location": "North Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BaernHaeckt_name'))]"
+            ],
+            "properties": {
+                "id": "1341566726289938",
+                "status": 4,
+                "author": "Microsoft.VisualStudio.Services.TFS",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"2a04bc739a6ab918c4fed88a130b1cf195cb83f6\",\"buildId\":\"162\",\"releaseId\":\"134\",\"buildNumber\":\"20190825.14\",\"releaseName\":\"Release-79\",\"repoProvider\":\"GitHub\",\"repoName\":\"baernhaeckt/Backend\",\"collectionUrl\":\"https://dev.azure.com/baernhaeckt/\",\"teamProject\":\"dd328fad-53ce-434b-899a-e039e075f315\",\"buildProjectUrl\":\"https://dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315\",\"repositoryUrl\":\"\",\"branch\":\"master\",\"teamProjectName\":\"BaernHaeckt2019\",\"slotName\":\"production\"}",
+                "start_time": "2019-08-25T09:44:50.093791Z",
+                "end_time": "2019-08-25T09:44:50.093791Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2016-08-01",
+            "name": "[concat(parameters('sites_BaernHaeckt_name'), '/1351566726608847')]",
+            "location": "North Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BaernHaeckt_name'))]"
+            ],
+            "properties": {
+                "id": "1351566726608847",
+                "status": 4,
+                "author": "Microsoft.VisualStudio.Services.TFS",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"9df42af1eddc46a4f0c78090806c682bc78866fe\",\"buildId\":\"163\",\"releaseId\":\"135\",\"buildNumber\":\"20190825.15\",\"releaseName\":\"Release-80\",\"repoProvider\":\"GitHub\",\"repoName\":\"baernhaeckt/Backend\",\"collectionUrl\":\"https://dev.azure.com/baernhaeckt/\",\"teamProject\":\"dd328fad-53ce-434b-899a-e039e075f315\",\"buildProjectUrl\":\"https://dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315\",\"repositoryUrl\":\"\",\"branch\":\"master\",\"teamProjectName\":\"BaernHaeckt2019\",\"slotName\":\"production\"}",
+                "start_time": "2019-08-25T09:50:09.085036Z",
+                "end_time": "2019-08-25T09:50:09.085036Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2016-08-01",
+            "name": "[concat(parameters('sites_BaernHaeckt_name'), '/1361566726901246')]",
+            "location": "North Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BaernHaeckt_name'))]"
+            ],
+            "properties": {
+                "id": "1361566726901246",
+                "status": 4,
+                "author": "Microsoft.VisualStudio.Services.TFS",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"a8c9be8f45f2acb8a5d303a50da01ac1614e9505\",\"buildId\":\"164\",\"releaseId\":\"136\",\"buildNumber\":\"20190825.16\",\"releaseName\":\"Release-81\",\"repoProvider\":\"GitHub\",\"repoName\":\"baernhaeckt/Backend\",\"collectionUrl\":\"https://dev.azure.com/baernhaeckt/\",\"teamProject\":\"dd328fad-53ce-434b-899a-e039e075f315\",\"buildProjectUrl\":\"https://dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315\",\"repositoryUrl\":\"\",\"branch\":\"master\",\"teamProjectName\":\"BaernHaeckt2019\",\"slotName\":\"production\"}",
+                "start_time": "2019-08-25T09:55:01.4061164Z",
+                "end_time": "2019-08-25T09:55:01.4061164Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2016-08-01",
+            "name": "[concat(parameters('sites_BaernHaeckt_name'), '/1381566727239064')]",
+            "location": "North Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BaernHaeckt_name'))]"
+            ],
+            "properties": {
+                "id": "1381566727239064",
+                "status": 4,
+                "author": "Microsoft.VisualStudio.Services.TFS",
+                "deployer": "VSTS",
+                "message": "{\"type\":\"Deployment\",\"commitId\":\"a9ccca3af45d1155d37a026c950480add7874cbc\",\"buildId\":\"166\",\"releaseId\":\"138\",\"buildNumber\":\"20190825.17\",\"releaseName\":\"Release-82\",\"repoProvider\":\"GitHub\",\"repoName\":\"baernhaeckt/Backend\",\"collectionUrl\":\"https://dev.azure.com/baernhaeckt/\",\"teamProject\":\"dd328fad-53ce-434b-899a-e039e075f315\",\"buildProjectUrl\":\"https://dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315\",\"repositoryUrl\":\"\",\"branch\":\"master\",\"teamProjectName\":\"BaernHaeckt2019\",\"slotName\":\"production\"}",
+                "start_time": "2019-08-25T10:00:39.2195463Z",
+                "end_time": "2019-08-25T10:00:39.2195463Z",
+                "active": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "apiVersion": "2016-08-01",
+            "name": "[concat(parameters('sites_BaernHaeckt_name'), '/', parameters('sites_BaernHaeckt_name'), '.azurewebsites.net')]",
+            "location": "North Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BaernHaeckt_name'))]"
+            ],
+            "properties": {
+                "siteName": "BaernHaeckt",
+                "hostNameType": "Verified"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
+            "apiVersion": "2019-04-01",
+            "name": "[concat(parameters('storageAccounts_baernhaeckt_name'), '/default/$web')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/blobServices', parameters('storageAccounts_baernhaeckt_name'), 'default')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_baernhaeckt_name'))]"
+            ],
+            "properties": {
+                "publicAccess": "None"
+            }
+        }
+    ]
+}
