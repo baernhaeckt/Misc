@@ -1,0 +1,323 @@
+{
+    "source": 2,
+    "revision": 10,
+    "description": null,
+    "createdBy": {
+        "displayName": "Marc Sallin",
+        "url": "https://spsprodweu1.vssps.visualstudio.com/A92d18f2f-c522-48ad-b51a-76774a13062b/_apis/Identities/5e71de48-7ce7-46d8-a0c0-62cdff86129e",
+        "_links": {
+            "avatar": {
+                "href": "https://dev.azure.com/baernhaeckt/_apis/GraphProfile/MemberAvatars/msa.Mjg5MzZiODUtZTU4Ny03ZjZmLTkyMzUtZjFjM2JjZjNmNzI0"
+            }
+        },
+        "id": "5e71de48-7ce7-46d8-a0c0-62cdff86129e",
+        "uniqueName": "marc.sallin@outlook.com",
+        "imageUrl": "https://dev.azure.com/baernhaeckt/_apis/GraphProfile/MemberAvatars/msa.Mjg5MzZiODUtZTU4Ny03ZjZmLTkyMzUtZjFjM2JjZjNmNzI0",
+        "descriptor": "msa.Mjg5MzZiODUtZTU4Ny03ZjZmLTkyMzUtZjFjM2JjZjNmNzI0"
+    },
+    "createdOn": "2019-08-17T13:09:24.420Z",
+    "modifiedBy": {
+        "displayName": "Marc Sallin",
+        "url": "https://spsprodweu1.vssps.visualstudio.com/A92d18f2f-c522-48ad-b51a-76774a13062b/_apis/Identities/5e71de48-7ce7-46d8-a0c0-62cdff86129e",
+        "_links": {
+            "avatar": {
+                "href": "https://dev.azure.com/baernhaeckt/_apis/GraphProfile/MemberAvatars/msa.Mjg5MzZiODUtZTU4Ny03ZjZmLTkyMzUtZjFjM2JjZjNmNzI0"
+            }
+        },
+        "id": "5e71de48-7ce7-46d8-a0c0-62cdff86129e",
+        "uniqueName": "marc.sallin@outlook.com",
+        "imageUrl": "https://dev.azure.com/baernhaeckt/_apis/GraphProfile/MemberAvatars/msa.Mjg5MzZiODUtZTU4Ny03ZjZmLTkyMzUtZjFjM2JjZjNmNzI0",
+        "descriptor": "msa.Mjg5MzZiODUtZTU4Ny03ZjZmLTkyMzUtZjFjM2JjZjNmNzI0"
+    },
+    "modifiedOn": "2019-08-24T09:21:43.373Z",
+    "isDeleted": false,
+    "lastRelease": {
+        "id": 137,
+        "name": "Release-56",
+        "artifacts": [],
+        "_links": {},
+        "description": "Triggered by baernhaeckt.Frontend 20190825.11.",
+        "releaseDefinition": {
+            "id": 2,
+            "projectReference": null,
+            "_links": {}
+        },
+        "createdOn": "2019-08-25T09:54:57.767Z",
+        "createdBy": {
+            "displayName": "GitHub",
+            "url": "https://spsprodweu1.vssps.visualstudio.com/A92d18f2f-c522-48ad-b51a-76774a13062b/_apis/Identities/aef7adea-de1f-4f71-a513-ec494321856e",
+            "_links": {
+                "avatar": {
+                    "href": "https://dev.azure.com/baernhaeckt/_apis/GraphProfile/MemberAvatars/svc.OTJkMThmMmYtYzUyMi00OGFkLWI1MWEtNzY3NzRhMTMwNjJiOkdpdEh1YiBBcHA6ZGQzMjhmYWQtNTNjZS00MzRiLTg5OWEtZTAzOWUwNzVmMzE1"
+                }
+            },
+            "id": "aef7adea-de1f-4f71-a513-ec494321856e",
+            "uniqueName": "GitHub App\\dd328fad-53ce-434b-899a-e039e075f315",
+            "imageUrl": "https://dev.azure.com/baernhaeckt/_apis/GraphProfile/MemberAvatars/svc.OTJkMThmMmYtYzUyMi00OGFkLWI1MWEtNzY3NzRhMTMwNjJiOkdpdEh1YiBBcHA6ZGQzMjhmYWQtNTNjZS00MzRiLTg5OWEtZTAzOWUwNzVmMzE1",
+            "descriptor": "svc.OTJkMThmMmYtYzUyMi00OGFkLWI1MWEtNzY3NzRhMTMwNjJiOkdpdEh1YiBBcHA6ZGQzMjhmYWQtNTNjZS00MzRiLTg5OWEtZTAzOWUwNzVmMzE1"
+        }
+    },
+    "variables": {},
+    "variableGroups": [],
+    "environments": [
+        {
+            "id": 2,
+            "name": "Production",
+            "rank": 1,
+            "owner": {
+                "displayName": "Marc Sallin",
+                "url": "https://spsprodweu1.vssps.visualstudio.com/A92d18f2f-c522-48ad-b51a-76774a13062b/_apis/Identities/5e71de48-7ce7-46d8-a0c0-62cdff86129e",
+                "_links": {
+                    "avatar": {
+                        "href": "https://dev.azure.com/baernhaeckt/_apis/GraphProfile/MemberAvatars/msa.Mjg5MzZiODUtZTU4Ny03ZjZmLTkyMzUtZjFjM2JjZjNmNzI0"
+                    }
+                },
+                "id": "5e71de48-7ce7-46d8-a0c0-62cdff86129e",
+                "uniqueName": "marc.sallin@outlook.com",
+                "imageUrl": "https://dev.azure.com/baernhaeckt/_apis/GraphProfile/MemberAvatars/msa.Mjg5MzZiODUtZTU4Ny03ZjZmLTkyMzUtZjFjM2JjZjNmNzI0",
+                "descriptor": "msa.Mjg5MzZiODUtZTU4Ny03ZjZmLTkyMzUtZjFjM2JjZjNmNzI0"
+            },
+            "variables": {},
+            "variableGroups": [],
+            "preDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 4
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": 1
+                }
+            },
+            "deployStep": {
+                "id": 5
+            },
+            "postDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 6
+                    }
+                ],
+                "approvalOptions": {
+                    "requiredApproverCount": null,
+                    "releaseCreatorCanBeApprover": false,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": 2
+                }
+            },
+            "deployPhases": [
+                {
+                    "deploymentInput": {
+                        "parallelExecution": {
+                            "parallelExecutionType": 0
+                        },
+                        "agentSpecification": {
+                            "identifier": "vs2017-win2016"
+                        },
+                        "skipArtifactsDownload": false,
+                        "artifactsDownloadInput": {
+                            "downloadInputs": []
+                        },
+                        "queueId": 9,
+                        "demands": [],
+                        "enableAccessToken": false,
+                        "timeoutInMinutes": 0,
+                        "jobCancelTimeoutInMinutes": 1,
+                        "condition": "succeeded()",
+                        "overrideInputs": {}
+                    },
+                    "rank": 1,
+                    "phaseType": 1,
+                    "name": "Agent job",
+                    "refName": null,
+                    "workflowTasks": [
+                        {
+                            "environment": {},
+                            "taskId": "eb72cb01-a7e5-427b-a8a1-1b31ccac8a43",
+                            "version": "2.*",
+                            "name": "AzureBlob File Copy",
+                            "refName": "",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "SourcePath": "$(System.DefaultWorkingDirectory)/Drop/drop",
+                                "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                                "ConnectedServiceName": "",
+                                "ConnectedServiceNameARM": "0fe622fe-4974-4e80-9245-ba91f40c2154",
+                                "Destination": "AzureBlob",
+                                "StorageAccount": "",
+                                "StorageAccountRM": "baernhaeckt",
+                                "ContainerName": "$web",
+                                "BlobPrefix": "",
+                                "EnvironmentName": "",
+                                "EnvironmentNameRM": "",
+                                "ResourceFilteringMethod": "machineNames",
+                                "MachineNames": "",
+                                "vmsAdminUserName": "",
+                                "vmsAdminPassword": "",
+                                "TargetPath": "",
+                                "AdditionalArgumentsForBlobCopy": "",
+                                "AdditionalArgumentsForVMCopy": "",
+                                "enableCopyPrerequisites": "false",
+                                "CopyFilesInParallel": "true",
+                                "CleanTargetBeforeCopy": "false",
+                                "skipCACheck": "true",
+                                "outputStorageUri": "",
+                                "outputStorageContainerSasToken": ""
+                            }
+                        }
+                    ]
+                }
+            ],
+            "environmentOptions": {
+                "emailNotificationType": "OnlyOnFailure",
+                "emailRecipients": "release.environment.owner;release.creator",
+                "skipArtifactsDownload": false,
+                "timeoutInMinutes": 0,
+                "enableAccessToken": false,
+                "publishDeploymentStatus": true,
+                "badgeEnabled": false,
+                "autoLinkWorkItems": false,
+                "pullRequestDeploymentEnabled": false
+            },
+            "demands": [],
+            "conditions": [
+                {
+                    "name": "ReleaseStarted",
+                    "conditionType": 1,
+                    "value": ""
+                }
+            ],
+            "executionPolicy": {
+                "concurrencyCount": 1,
+                "queueDepthCount": 0
+            },
+            "schedules": [],
+            "currentRelease": {
+                "id": 137,
+                "url": "https://vsrm.dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315/_apis/Release/releases/137",
+                "_links": {}
+            },
+            "retentionPolicy": {
+                "daysToKeep": 30,
+                "releasesToKeep": 3,
+                "retainBuild": true
+            },
+            "processParameters": {},
+            "properties": {},
+            "preDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "postDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "environmentTriggers": [],
+            "badgeUrl": "https://vsrm.dev.azure.com/baernhaeckt/_apis/public/Release/badge/dd328fad-53ce-434b-899a-e039e075f315/2/2"
+        }
+    ],
+    "artifacts": [
+        {
+            "sourceId": "dd328fad-53ce-434b-899a-e039e075f315:2",
+            "type": "Build",
+            "alias": "Drop",
+            "definitionReference": {
+                "artifactSourceDefinitionUrl": {
+                    "id": "https://dev.azure.com/baernhaeckt/_permalink/_build/index?collectionId=93ce1291-d7cd-4569-a8b5-5e6de24668a2&projectId=dd328fad-53ce-434b-899a-e039e075f315&definitionId=2",
+                    "name": ""
+                },
+                "defaultVersionBranch": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionSpecific": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionTags": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionType": {
+                    "id": "latestType",
+                    "name": "Latest"
+                },
+                "definition": {
+                    "id": "2",
+                    "name": "baernhaeckt.Frontend"
+                },
+                "definitions": {
+                    "id": "",
+                    "name": ""
+                },
+                "IsMultiDefinitionType": {
+                    "id": "False",
+                    "name": "False"
+                },
+                "project": {
+                    "id": "dd328fad-53ce-434b-899a-e039e075f315",
+                    "name": "BaernHaeckt2019"
+                },
+                "repository": {
+                    "id": "",
+                    "name": ""
+                }
+            },
+            "isPrimary": true,
+            "isRetained": false
+        }
+    ],
+    "triggers": [
+        {
+            "artifactAlias": "Drop",
+            "triggerConditions": [],
+            "triggerType": 1
+        }
+    ],
+    "releaseNameFormat": "Release-$(rev:r)",
+    "tags": [],
+    "properties": {
+        "DefinitionCreationSource": {
+            "$type": "System.String",
+            "$value": "ReleaseNew"
+        },
+        "IntegrateJiraWorkItems": {
+            "$type": "System.String",
+            "$value": "false"
+        }
+    },
+    "id": 2,
+    "name": "baernhaeckt.Frontend",
+    "path": "\\",
+    "projectReference": null,
+    "url": "https://vsrm.dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315/_apis/Release/definitions/2",
+    "_links": {
+        "self": {
+            "href": "https://vsrm.dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315/_apis/Release/definitions/2"
+        },
+        "web": {
+            "href": "https://dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315/_release?definitionId=2"
+        }
+    }
+}

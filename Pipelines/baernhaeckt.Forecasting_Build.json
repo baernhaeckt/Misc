@@ -1,0 +1,179 @@
+{
+    "triggers": [
+        {
+            "branchFilters": [
+                "+master"
+            ],
+            "pathFilters": [],
+            "batchChanges": false,
+            "maxConcurrentBuildsPerBranch": 1,
+            "pollingInterval": 0,
+            "triggerType": 2
+        }
+    ],
+    "variables": {
+        "system.debug": {
+            "value": "false",
+            "allowOverride": true
+        }
+    },
+    "properties": {},
+    "tags": [],
+    "_links": {
+        "self": {
+            "href": "https://dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315/_apis/build/Definitions/4?revision=5"
+        },
+        "web": {
+            "href": "https://dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315/_build/definition?definitionId=4"
+        },
+        "editor": {
+            "href": "https://dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315/_build/designer?id=4&_a=edit-build-definition"
+        },
+        "badge": {
+            "href": "https://dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315/_apis/build/status/4"
+        }
+    },
+    "buildNumberFormat": "$(date:yyyyMMdd)$(rev:.r)",
+    "jobAuthorizationScope": 1,
+    "jobTimeoutInMinutes": 60,
+    "jobCancelTimeoutInMinutes": 5,
+    "badgeEnabled": true,
+    "process": {
+        "phases": [
+            {
+                "steps": [
+                    {
+                        "environment": {},
+                        "enabled": true,
+                        "continueOnError": false,
+                        "alwaysRun": false,
+                        "displayName": "Build an image",
+                        "timeoutInMinutes": 0,
+                        "condition": "succeeded()",
+                        "task": {
+                            "id": "e28912f1-0114-4464-802a-a3a35437fd16",
+                            "versionSpec": "2.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "containerRegistry": "62035c98-6b08-4d62-8aae-0c8e80b89ae9",
+                            "repository": "msallin/baernhaeckt",
+                            "command": "buildAndPush",
+                            "Dockerfile": "Dockerfile",
+                            "buildContext": "**",
+                            "tags": "$(Build.BuildId)\nlatest",
+                            "arguments": "",
+                            "addPipelineData": "true"
+                        }
+                    }
+                ],
+                "name": "Agent job 1",
+                "refName": "Job_1",
+                "condition": "succeeded()",
+                "target": {
+                    "executionOptions": {
+                        "type": 0
+                    },
+                    "allowScriptsAuthAccessOption": false,
+                    "type": 1
+                },
+                "jobAuthorizationScope": 1
+            }
+        ],
+        "target": {
+            "agentSpecification": {
+                "identifier": "ubuntu-16.04"
+            }
+        },
+        "type": 1
+    },
+    "repository": {
+        "properties": {
+            "apiUrl": "https://api.github.com/repos/baernhaeckt/Forecasting",
+            "branchesUrl": "https://api.github.com/repos/baernhaeckt/Forecasting/branches",
+            "cloneUrl": "https://github.com/baernhaeckt/Forecasting.git",
+            "connectedServiceId": "1895bfb7-5f19-4fff-af1f-74f8081fd1c0",
+            "defaultBranch": "master",
+            "fullName": "baernhaeckt/Forecasting",
+            "hasAdminPermissions": "False",
+            "isFork": "False",
+            "isPrivate": "False",
+            "lastUpdated": "08/24/2019 21:37:32",
+            "manageUrl": "https://github.com/baernhaeckt/Forecasting",
+            "nodeId": "MDEwOlJlcG9zaXRvcnkyMDQyMTMzNDE=",
+            "ownerId": "54203915",
+            "orgName": "baernhaeckt",
+            "refsUrl": "https://api.github.com/repos/baernhaeckt/Forecasting/git/refs",
+            "safeRepository": "baernhaeckt/Forecasting",
+            "shortName": "Forecasting",
+            "ownerAvatarUrl": "https://avatars2.githubusercontent.com/u/54203915?v=4",
+            "archived": "False",
+            "externalId": "204213341",
+            "ownerIsAUser": "False",
+            "checkoutNestedSubmodules": "false",
+            "cleanOptions": "0",
+            "fetchDepth": "0",
+            "gitLfsSupport": "false",
+            "reportBuildStatus": "true",
+            "skipSyncSource": "false",
+            "labelSourcesFormat": "$(build.buildNumber)",
+            "labelSources": "0"
+        },
+        "id": "baernhaeckt/Forecasting",
+        "type": "GitHub",
+        "name": "baernhaeckt/Forecasting",
+        "url": "https://github.com/baernhaeckt/Forecasting.git",
+        "defaultBranch": "master",
+        "clean": "false",
+        "checkoutSubmodules": false
+    },
+    "processParameters": {},
+    "quality": 1,
+    "authoredBy": {
+        "displayName": "Marc Sallin",
+        "url": "https://spsprodweu1.vssps.visualstudio.com/A92d18f2f-c522-48ad-b51a-76774a13062b/_apis/Identities/5e71de48-7ce7-46d8-a0c0-62cdff86129e",
+        "_links": {
+            "avatar": {
+                "href": "https://dev.azure.com/baernhaeckt/_apis/GraphProfile/MemberAvatars/msa.Mjg5MzZiODUtZTU4Ny03ZjZmLTkyMzUtZjFjM2JjZjNmNzI0"
+            }
+        },
+        "id": "5e71de48-7ce7-46d8-a0c0-62cdff86129e",
+        "uniqueName": "marc.sallin@outlook.com",
+        "imageUrl": "https://dev.azure.com/baernhaeckt/_apis/GraphProfile/MemberAvatars/msa.Mjg5MzZiODUtZTU4Ny03ZjZmLTkyMzUtZjFjM2JjZjNmNzI0",
+        "descriptor": "msa.Mjg5MzZiODUtZTU4Ny03ZjZmLTkyMzUtZjFjM2JjZjNmNzI0"
+    },
+    "drafts": [],
+    "queue": {
+        "_links": {
+            "self": {
+                "href": "https://dev.azure.com/baernhaeckt/_apis/build/Queues/9"
+            }
+        },
+        "id": 9,
+        "name": "Azure Pipelines",
+        "url": "https://dev.azure.com/baernhaeckt/_apis/build/Queues/9",
+        "pool": {
+            "id": 9,
+            "name": "Azure Pipelines",
+            "isHosted": true
+        }
+    },
+    "id": 4,
+    "name": "baernhaeckt.Forecasting",
+    "url": "https://dev.azure.com/baernhaeckt/dd328fad-53ce-434b-899a-e039e075f315/_apis/build/Definitions/4?revision=5",
+    "uri": "vstfs:///Build/Definition/4",
+    "path": "\\",
+    "type": 2,
+    "queueStatus": 0,
+    "revision": 5,
+    "createdDate": "2019-08-24T21:47:54.110Z",
+    "project": {
+        "id": "dd328fad-53ce-434b-899a-e039e075f315",
+        "name": "BaernHaeckt2019",
+        "url": "https://dev.azure.com/baernhaeckt/_apis/projects/dd328fad-53ce-434b-899a-e039e075f315",
+        "state": 1,
+        "revision": 12,
+        "visibility": 2,
+        "lastUpdateTime": "2019-08-17T12:13:02.757Z"
+    }
+}
